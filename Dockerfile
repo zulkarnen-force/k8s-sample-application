@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy package.json and install dependencies
 COPY package.json ./
-RUN npm install
+RUN apk add curl && npm install
 
 # Copy source files
 COPY . .

@@ -15,9 +15,13 @@ spec:
       labels:
         app: express-app
     spec:
+      initContainers:
+        - name: migrate
+          image: node:14
+          command: ["sh", "-c", "npx prisma migrate deploy"]
       containers:
         - name: express-app
-          image: express-prisma-postgres:latest
+          image: docker.io/tryzrxcatch/sample-app-k8s
           env:
             - name: DATABASE_URL
               value: "postgresql://postgres:postgres@postgres:5432/example"
@@ -25,8 +29,8 @@ spec:
             - containerPort: 3000
           resources:
             requests:
-              memory: "64Mi"
-              cpu: "250m"
-            limits:
-              memory: "128Mi"
+              memory: "256Mi"
               cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
